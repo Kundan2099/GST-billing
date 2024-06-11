@@ -23,6 +23,7 @@ Route::get('/dashboard', [AppController::class, 'dashboard'])->name('dashboard')
 
 // Party
 Route::get('/add-party', [PartyController::class, 'addParty'])->name('add-party');
+Route::post('/create-party', [PartyController::class, 'createParty'])->name('create-party');
 Route::get('/manage-party', [PartyController::class, 'manageParty'])->name('manage-party');
 
 // Gst Bill
