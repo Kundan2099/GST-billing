@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PartyType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +14,11 @@ return new class extends Migration
     {
         Schema::create('parties', function (Blueprint $table) {
             $table->id();
-            $table->enum('party_type', ['client', 'vendor', 'employee'])->nullable();
+            $table->enum('party_type', [
+                PartyType::CLIENT->value,
+                PartyType::EMPLOYEE->value,
+                PartyType::VENDOR->value,
+            ])->nullable();
             $table->string('full_name', 100)->nullable();
             $table->string('phone_no', 15)->nullable();
             $table->text('address')->nullable();

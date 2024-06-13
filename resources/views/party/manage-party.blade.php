@@ -9,13 +9,17 @@
                     <h2 class="page-title font-weight-bold text-uppercase">Manage Clients</h2>
                 </div>
             </div>
-
         </div>
         <!-- end page title -->
         <div class="row">
             <div class="col-12">
+                @if (session('message'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('message') }}
+                    </div>
+                @endif
                 <div class="card-box">
-                    <a href="addclient.html" class="btn btn-sm btn-blue waves-effect waves-light float-right">
+                    <a href="{{ route('add-party') }}" class="btn btn-sm btn-blue waves-effect waves-light float-right">
                         <i class="mdi mdi-plus-circle"></i> Add Client
                     </a>
                     <h4 class="header-title mb-4 text-uppercase">Manage Clients</h4>
@@ -42,59 +46,60 @@
                         id="tickets-table">
                         <thead>
                             <tr>
-                                <th>
-                                    S.No.
-                                </th>
-                                <th>Name</th>
-                                <th>Phone/Email</th>
-                                <th>Address</th>
-                                <th>TIN No.</th>
-                                <th>Created On</th>
+                                <th>S.No.</th>
+                                <th>Client Type</th>
+                                <th>Client Info</th>
+                                <th>Bank Details</th>
+                                <th>Created At</th>
                                 <th class="hidden-sm">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td><b>#1256</b></td>
-                                <td>
-                                    John Doe
-                                </td>
+                            @foreach ($parties as $key => $party)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $party->party_type }}</td>
 
-                                <td>
-                                    <ul class="list-unstyled">
-                                        <li><b>Phone :</b><span> 9865324085</span></li>
-                                        <li><b>Email :</b> <span> absd@gmail.com</span></li>
-                                    </ul>
-                                </td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            <li><b>Name : </b><span>{{ $party->full_name }}</span></li>
+                                            <li><b>Phone : </b><span>{{ $party->phone_no }}</span></li>
+                                            <li><b>Address : </b><span>{{ $party->address }}</span></li>
+                                        </ul>
+                                    </td>
 
-                                <td>
-                                    Vyash colony
-                                </td>
+                                    <td>
+                                        <ul class="list-unstyled">
+                                            <li><b>Account Holder Name : </b><span>{{ $party->account_holder_name }}</span>
+                                            </li>
+                                            <li><b>Acc No : </b><span>{{ $party->account_no }}</span></li>
+                                            <li><b>Bank Name : </b><span>{{ $party->bank_name }}</span></li>
+                                            <li><b>IFSC Code : </b><span>{{ $party->ifsc_code }}</span></li>
+                                            <li><b>Branch Address : </b><span>{{ $party->branch_address }}</span></li>
+                                        </ul>
+                                    </td>
 
-                                <td>
-                                    64582
-                                </td>
+                                    <td>{{ $party->created_at->format('d-m-y') }}</td>
 
-                                <td>
-                                    12/02/2012
-                                </td>
-
-                                <td>
-                                    <div class="btn-group dropdown">
-                                        <a href="javascript: void(0);"
-                                            class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm"
-                                            data-toggle="dropdown" aria-expanded="false"><i
-                                                class="mdi mdi-dots-horizontal"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="mdi mdi-pencil mr-2 text-muted font-18 vertical-middle"></i>Edit</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle"></i>Delete</a>
+                                    <td>
+                                        <div class="btn-group dropdown">
+                                            <a href="javascript: void(0);"
+                                                class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm"
+                                                data-toggle="dropdown" aria-expanded="false"><i
+                                                    class="mdi mdi-dots-horizontal"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"
+                                                    href="{{ route('view.party.update', ['id' => $party->id]) }}"><i
+                                                        class="mdi mdi-pencil mr-2 text-muted font-18 vertical-middle"></i>Edit</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('handle.party.delete', $party->id) }}"><i
+                                                        class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle"></i>Delete</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 

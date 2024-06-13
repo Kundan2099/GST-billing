@@ -25,6 +25,10 @@ Route::get('/dashboard', [AppController::class, 'dashboard'])->name('dashboard')
 Route::get('/add-party', [PartyController::class, 'addParty'])->name('add-party');
 Route::post('/create-party', [PartyController::class, 'createParty'])->name('create-party');
 Route::get('/manage-party', [PartyController::class, 'manageParty'])->name('manage-party');
+Route::get('/update/{id}', [PartyController::class, 'viewPartyUpdate'])->name('view.party.update');
+Route::post('/update/{id}', [PartyController::class, 'handlePartyUpdate'])->name('handal.party.update');
+Route::get('/delete/{id}', [PartyController::class, 'handlePartyDelete'])->name('handle.party.delete');
+
 
 // Gst Bill
 Route::get('/add-gst-bill', [GstBillController::class, 'addBill'])->name('add-gst-bill');
