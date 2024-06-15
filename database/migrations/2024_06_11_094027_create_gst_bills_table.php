@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('gst_bills', function (Blueprint $table) {
             $table->id();
-            $table->integer('party_id')->nullable();
-            $table->date('invoice_data')->nullable();
+            $table->foreignId('party_id')->nullable()->references('id')->on('parties');
+            $table->date('invoice_date')->nullable();
             $table->string('invoice_no')->nullable();
             $table->text('item_description')->nullable();
             $table->float('total_amount', 10, 2)->default(0);
-            $table->float('cgst_rate', 10, 2)->default(0);
-            $table->float('sgst_rate', 10, 2)->default(0);
-            $table->float('igst_rate', 10, 2)->default(0);
+            $table->float('cgst_rate', 10, 2)->nullable();
+            $table->float('sgst_rate', 10, 2)->nullable();
+            $table->float('igst_rate', 10, 2)->nullable();
             $table->float('cgst_amount', 10, 2)->default(0);
             $table->float('sgst_amount', 10, 2)->default(0);
             $table->float('igst_amount', 10, 2)->default(0);
-            $table->float('tax_amount', 10, 2)->default(0);
-            $table->float('net_amount', 10, 2)->default(0);
+            $table->float("tax_amount", 10, 2)->nullable();
+            $table->float("net_amount", 10, 2)->nullable();
             $table->text('declaration')->nullable();
             $table->timestamps();
         });

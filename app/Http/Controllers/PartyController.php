@@ -63,7 +63,7 @@ class PartyController extends Controller
             $party->save();
 
 
-            return redirect()->route('manage-party')->with('message', 'Party created successfully');
+            return redirect()->route('manage-party')->with('message', 'Party successfully created');
 
             // return redirect()->route('add-party')->with('message', [
             //     'status' => 'success',

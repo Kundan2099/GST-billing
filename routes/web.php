@@ -31,6 +31,22 @@ Route::get('/delete/{id}', [PartyController::class, 'handlePartyDelete'])->name(
 
 
 // Gst Bill
-Route::get('/add-gst-bill', [GstBillController::class, 'addBill'])->name('add-gst-bill');
-Route::get('/manage-gst-bill', [GstBillController::class, 'manageBill'])->name('manage-gst-bill');
-Route::get('/print-gst-bill', [GstBillController::class, 'printBill'])->name('print-gst-bill');
+
+
+Route::prefix('gst-billing')->controller(GstBillController::class)->group(function () {
+    Route::get('/', 'viewGstBillList')->name('view.gst.bill.list');
+    Route::get('/create', 'viewGstBillCreate')->name('view.gst.bill.create');
+    Route::get('/print-create', 'viewGstBillPrint')->name('view.gst.bill.print');
+    Route::post('/create', 'handleGstBillCreate')->name('handle.gst.bill.create');
+
+});
+
+// Route::prefix('admin-access')->controller(AdminAccessController::class)->group(function () {
+//     Route::get('/', 'viewAdminAccessList')->name('admin.view.admin.access.list');
+//     Route::get('/create', 'viewAdminAccessCreate')->name('admin.view.admin.access.create');
+//     Route::get('/update/{id}', 'viewAdminAccessUpdate')->name('admin.view.admin.access.update');
+//     Route::post('/create', 'handleAdminAccessCreate')->name('admin.handle.admin.access.create');
+//     Route::post('/update/{id}', 'handleAdminAccessUpdate')->name('admin.handle.admin.access.update');
+//     Route::put('/status', 'handleToggleAdminAccessStatus')->name('admin.handle.admin.access.status');
+//     Route::get('/delete/{id}', 'handleAdminAccessDelete')->name('admin.handle.admin.access.delete');
+// });

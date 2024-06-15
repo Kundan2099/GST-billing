@@ -18,32 +18,35 @@
                     <div class="card-body">
                         <h4 class="header-title text-uppercase">Invoice Basic Info</h4>
                         <hr>
-                        <form action="" method="post">
+                        <form action="{{ route('handle.gst.bill.create') }}" method="post">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group mb-3">
                                         <label>Type</label>
-                                        <select class="form-control border-bottom" id="validationCustom01">
-                                            <option>Existing Client</option>
-                                            <option>Cleints</option>
-                                            <option>Vendor</option>
+                                        <select name="party_id" class="form-control border-bottom" id="validationCustom01">
+                                            <option value="">Select Client</option>
+                                            @foreach ($parties as $party)
+                                                <option value="{{ $party->id }}">{{ $party->full_name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group mb-3">
-                                        <label>Invoice Date</label>
-                                        <input type="date" class="form-control border-bottom" id="validationCustom02"
-                                            placeholder="Enter Phone/Mobile number">
+                                        <label>Invoice Date <em>*</em></label>
+                                        <input type="date" name="invoice_date"
+                                            class="form-control border-bottom"
+                                            id="validationCustom02" placeholder="Enter Phone/Mobile number">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group mb-3">
                                         <label>Invoice Number</label>
-                                        <input type="text" class="form-control border-bottom" id="validationCustom02"
-                                            placeholder="Enter Phone/Mobile number">
+                                        <input type="text" name="invoice_no" class="form-control border-bottom"
+                                            id="validationCustom02" placeholder="Enter Phone/Mobile number">
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +72,7 @@
                                     <input class="form-control" name="item_description" />
                                 </div>
                                 <div class="col-md-4 border p-2">
-                                    <input class="form-control" type="text" id="totalAmountInput"
+                                    <input class="form-control" type="text" name="total_amount" id="totalAmountInput"
                                         oninput="calculateNetAmount()">
                                 </div>
                             </div>
@@ -122,7 +125,6 @@
                                         <input type="text" class="form-control border-bottom" id="validationCustom05"
                                             placeholder="Declaration">
                                     </div>
-
                                     <a href="printGST_bill.html">
                                         <button type="submit" class="btn btn-primary float-right mb-2">SUBMIT</button>
                                     </a>
@@ -133,7 +135,5 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 @endsection
