@@ -60,25 +60,26 @@
                         <tbody>
                             @foreach ($bills as $key => $bill)
                                 <tr>
-                                    <td><b>{{ $key + 1}}</b></td>
-                                    <td>
-                                        #5
-                                    </td>
-
-                                    <td>
-                                        Joh Doe
-                                    </td>
+                                    <td><b>{{ $key + 1 }}</b></td>
+                                    <td> {{ $bill->invoice_no }}</td>
 
                                     <td>
                                         <ul class="list-unstyled">
-                                            <li><b>Total Amount :</b><span> 555</span></li>
-                                            <li><b>TAX :</b><span> 55</span></li>
-                                            <li><b>Net Amount :</b><span> 55</span></li>
+                                            <li><b>Name : </b><span>{{ $bill->party->full_name }}</span></li>
+                                            <li><b>Phone : </b>{{ $bill->party->phone_no }}</li>
                                         </ul>
                                     </td>
 
                                     <td>
-                                        01/09/2023
+                                        <ul class="list-unstyled">
+                                            <li><b>Total Amount :</b><span> {{ $bill->total_amount }}</span></li>
+                                            <li><b>TAX :</b><span> 55</span>{{ $bill->tax_amount }}</li>
+                                            <li><b>Net Amount :</b><span>{{ $bill->net_amount }}</span></li>
+                                        </ul>
+                                    </td>
+
+                                    <td>
+                                        {{date("d-m-Y", strtotime($bill->invoice_date))}}
                                     </td>
                                     <td>
                                         <div class="btn-group dropdown">
