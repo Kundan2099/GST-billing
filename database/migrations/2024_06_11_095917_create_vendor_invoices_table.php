@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date("invoice_date")->nullable();
             $table->string("invoice_no")->nullable();
             $table->text("item_description")->nullable();
-            $table->float("total_amount", 10, 2)->default(0);
+            $table->float("total_amount", 10, 2)->nullable();
             $table->text("declaration")->nullable();
             $table->string("account_holder_name")->nullable();
             $table->string("account_no")->nullable();

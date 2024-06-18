@@ -54,29 +54,21 @@
                             </b>
                             <div class="row pl-2 pt-1">
                                 <div class="col-12 d-flex justiy-content-start">
-                                    <label for="">Name : </label>
+                                    <label for="">Name :</label>
+                                    <span class="ml-1">{{ $bill->party->full_name }}</span>
                                     <input type="text" style="border: none; line-height: -10;">
                                 </div>
                             </div>
                             <div class="row pl-2">
                                 <div class="col-12 d-flex justiy-content-start">
-                                    <label for="">Address : </label>
-                                    <span></span>
+                                    <label for="">Phone : </label>
+                                    <span>{{ $bill->party->phone_no }}</span>
                                 </div>
                             </div>
                             <div class="row pl-2">
                                 <div class="col-12 d-flex justiy-content-start">
-                                    <label for="">Phone : </label>
-                                    <span></span>
-                                </div>
-                            </div>
-                            <div class="row pl-2 pb-1">
-                                <div class="col-9 d-flex justiy-content-start">
-                                    <label for="">State : </label>
-                                    <span></span>
-                                </div>
-                                <div class="col-3 d-flex px-1">
-                                    <label for="">State Code | <span><b></b></span> </label>
+                                    <label for="">Address : </label>
+                                    <span>{{ $bill->party->address }}</span>
                                 </div>
                             </div>
                         </div>
@@ -86,31 +78,17 @@
                                     <h5>Invoice Details</h5>
                                 </div>
                             </b>
-                            <div class="row pl-2 pt-1">
-                                <div class="col-12 d-flex justiy-content-start">
-                                    <label for="">Revrce Charge : </label>
-                                    <span></span>
-                                </div>
-                            </div>
+
                             <div class="row pl-2">
                                 <div class="col-12 d-flex justiy-content-start">
                                     <label for="">Invoice No : </label>
-                                    <span></span>
+                                    <span>{{ $bill->invoice_no }}</span>
                                 </div>
                             </div>
                             <div class="row pl-2">
                                 <div class="col-12 d-flex justiy-content-start">
                                     <label for="">Invoice Date : </label>
-                                    <span></span>
-                                </div>
-                            </div>
-                            <div class="row pl-2 pb-1">
-                                <div class="col-9 d-flex justiy-content-start">
-                                    <label for="">State : </label>
-                                    <span></span>
-                                </div>
-                                <div class="col-3 d-flex px-1">
-                                    <label for="">State Code | <span><b>08</b></span> </label>
+                                    <span>{{ $bill->invoice_date }}</span>
                                 </div>
                             </div>
                         </div>
@@ -123,9 +101,7 @@
                                 <table class="table mt-4 table-centered border">
                                     <thead>
                                         <tr>
-                                            <th class="py-0"
-                                                style="width: 8%; background-color: rgb(130, 210, 241); color: black;">
-                                                SR NO.</th>
+
                                             <th class="py-0" style="background-color: rgb(130, 210, 241); color: black;">
                                                 DESCRIPTION</th>
                                             <th style="width: 15%; background-color: rgb(130, 210, 241); color: black;"
@@ -136,12 +112,12 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>1</td>
                                             <td>
-                                                <b>Web Design</b> <br />
+                                                <b>{{ $bill->item_description }}</b> <br />
                                                 2 Pages static website - my website
+
                                             </td>
-                                            <td class="text-center">$660.00</td>
+                                            <td class="text-center">₹{{ $bill->total_amount }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -160,20 +136,18 @@
                         </div> <!-- end col -->
                         <div class="col-sm-6 col-lg-3 mt-1">
                             <ul class="list-unstyled">
-                                <li><b>Total :</b> <span class="float-right"><i class="fas fa-rupee-sign"></i> 0.00</span>
-                                </li>
+                                <li><b>Total :</b> <span class="float-right"><i class="fas fa-rupee-sign"></i>
+                                        {{ $bill->total_amount }}</span></li>
                                 <li><b>CGST :</b><span class="float-right"><i class="fas fa-rupee-sign"></i>
-                                        0.00</span></li>
+                                        {{ $bill->cgst_amount }}</span></li>
                                 <li><b>SGST :</b><span class="float-right"><i class="fas fa-rupee-sign"></i>
-                                        0.00</span></li>
+                                        {{ $bill->sgst_amount }}</span></li>
                                 <li><b>IGST :</b><span class="float-right"><i class="fas fa-rupee-sign"></i>
-                                        0.00</span></li>
-                                <li><b>Total GST :</b><span class="float-right"><i class="fas fa-rupee-sign"></i>
-                                        0.00</span>
-                                </li>
-                                <li><b>Grand Total :</b><span class="float-right"><i class="fas fa-rupee-sign"></i>
-                                        0.00</span>
-                                </li>
+                                        {{ $bill->igst_amount }}</span></li>
+                                <li><b>Total Tax :</b><span class="float-right"><i class="fas fa-rupee-sign"></i>
+                                        {{ $bill->tax_amount }}</span></li>
+                                <li><b>Net Amount :</b><span class="float-right"><i class="fas fa-rupee-sign"></i>
+                                        {{ $bill->net_amount }}</span></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div> <!-- end col -->

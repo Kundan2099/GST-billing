@@ -58,147 +58,58 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($bills as $key => $bill)
-                                <tr>
-                                    <td><b>{{ $key + 1 }}</b></td>
-                                    <td> {{ $bill->invoice_no }}</td>
+                            @if (count($bills))
+                                @foreach ($bills as $key => $bill)
+                                    <tr>
+                                        <td><b>{{ $key + 1 }}</b></td>
+                                        <td> {{ $bill->invoice_no }}</td>
 
-                                    <td>
-                                        <ul class="list-unstyled">
-                                            <li><b>Name : </b><span>{{ $bill->party->full_name }}</span></li>
-                                            <li><b>Phone : </b>{{ $bill->party->phone_no }}</li>
-                                        </ul>
-                                    </td>
+                                        <td>
+                                            <ul class="list-unstyled">
+                                                <li><b>Name : </b><span>{{ $bill->party->full_name }}</span></li>
+                                                <li><b>Phone : </b>{{ $bill->party->phone_no }}</li>
+                                            </ul>
+                                        </td>
 
-                                    <td>
-                                        <ul class="list-unstyled">
-                                            <li><b>Total Amount :</b><span> {{ $bill->total_amount }}</span></li>
-                                            <li><b>TAX :</b><span> 55</span>{{ $bill->tax_amount }}</li>
-                                            <li><b>Net Amount :</b><span>{{ $bill->net_amount }}</span></li>
-                                        </ul>
-                                    </td>
+                                        <td>
+                                            <ul class="list-unstyled">
+                                                <li><b>Total Amount :</b><span> {{ $bill->total_amount }}</span></li>
+                                                <li><b>TAX :</b><span> 55</span>{{ $bill->tax_amount }}</li>
+                                                <li><b>Net Amount :</b><span>{{ $bill->net_amount }}</span></li>
+                                            </ul>
+                                        </td>
 
-                                    <td>
-                                        {{date("d-m-Y", strtotime($bill->invoice_date))}}
-                                    </td>
-                                    <td>
-                                        <div class="btn-group dropdown">
-                                            <a href="javascript: void(0);"
-                                                class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm"
-                                                data-toggle="dropdown" aria-expanded="false"><i
-                                                    class="mdi mdi-dots-horizontal"></i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal"><i
-                                                        class="mdi mdi-alert-octagon-outline mr-2 text-muted font-18 vertical-middle"></i>Detail</button>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle"></i>Delete</a>
-                                                <a class="dropdown-item" href="{{ asset('view.gst.bill.print') }}"><i
-                                                        class="mdi mdi-printer mr-2 text-muted font-18 vertical-middle"></i>
-                                                    Print</a>
+                                        <td>
+                                            {{ date('d-m-Y', strtotime($bill->invoice_date)) }}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group dropdown">
+                                                <a href="javascript: void(0);"
+                                                    class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm"
+                                                    data-toggle="dropdown" aria-expanded="false"><i
+                                                        class="mdi mdi-dots-horizontal"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('handle.gst.bill.delete', $bill->id) }}"><i
+                                                            class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle"></i>Delete</a>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('view.gst.bill.print', $bill->id) }}"><i
+                                                            class="mdi mdi-printer mr-2 text-muted font-18 vertical-middle"></i>
+                                                        Print</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                            <tr>
+                                <td colspan="6">No recode found!</td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div><!-- end col -->
             </div>
         </div>
         <!-- end row -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-body p-1">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card-box m-0">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="m-1"><b>Date : </b>01/09/2023</p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="m-1 float-right"><b>Bill No. : </b>#01</p>
-                                        </div>
-                                    </div>
-                                    <div class="border-top"></div>
-                                    <div class="row pt-1">
-                                        <div class="col-6">
-                                            <p class="m-1"><b>Customer Name : </b>John Doe</p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="m-1 float-right"><b>Phone No. : </b>9865320159</p>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="border-bottom"></div> -->
-
-                                    <!-- Logo & title -->
-
-                                    <div class="row">
-                                        <div class="col-12 p-0">
-                                            <div class="table-responsive table-bordered">
-                                                <table class="table mt-0 table-centered border">
-                                                    <thead>
-                                                        <tr>
-
-                                                            <th class="py-0"
-                                                                style="background-color: rgb(130, 210, 241); color: black;">
-                                                                DESCRIPTION</th>
-                                                            <th style="width: 15%; background-color: rgb(130, 210, 241); color: black;"
-                                                                class="text-center py-1">
-                                                                AMOUNT
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-
-                                                            <td>
-                                                                <b>Web Design</b> <br />
-                                                                2 Pages static website - my website
-                                                            </td>
-                                                            <td class="text-center">$660.00</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div> <!-- end table-responsive -->
-                                        </div> <!-- end col -->
-                                    </div>
-                                    <!-- end row -->
-
-                                    <div class="row border">
-                                        <div class="col-sm-12 col-lg-12 mt-1">
-                                            <ul class="list-unstyled float-right">
-                                                <li><b>Total Amount :</b> <span class="float-right"><i
-                                                            class="fas fa-rupee-sign ml-2"></i> 0.00</span></li>
-
-                                                <li><b>TAX :</b><span class="float-right"><i class="fas fa-rupee-sign"></i>
-                                                        0.00</span>
-                                                </li>
-                                                <li><b>Net Amount :</b><span class="float-right"><i
-                                                            class="fas fa-rupee-sign"></i> 0.00</span>
-                                                </li>
-                                            </ul>
-                                            <div class="clearfix"></div>
-                                        </div> <!-- end col -->
-                                    </div>
-                                    <!-- end row -->
-
-                                </div> <!-- end card-box -->
-                            </div> <!-- end col -->
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="printGST_bill.html" class="btn btn-primary waves-effect waves-light">Print
-                            <i class="mdi mdi-printer mr-1"></i></a>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+    @endsection

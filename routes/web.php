@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\GstBillController;
 use App\Http\Controllers\PartyController;
+use App\Http\Controllers\VendorInvoiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,17 +37,13 @@ Route::get('/delete/{id}', [PartyController::class, 'handlePartyDelete'])->name(
 Route::prefix('gst-billing')->controller(GstBillController::class)->group(function () {
     Route::get('/', 'viewGstBillList')->name('view.gst.bill.list');
     Route::get('/create', 'viewGstBillCreate')->name('view.gst.bill.create');
-    Route::get('/print-create', 'viewGstBillPrint')->name('view.gst.bill.print');
+    Route::get('/print/{id}', 'viewGstBillPrint')->name('view.gst.bill.print');
     Route::post('/create', 'handleGstBillCreate')->name('handle.gst.bill.create');
-
+    Route::get('/delete/{id}', 'handleGstBillDelete')->name('handle.gst.bill.delete');
 });
 
-// Route::prefix('admin-access')->controller(AdminAccessController::class)->group(function () {
-//     Route::get('/', 'viewAdminAccessList')->name('admin.view.admin.access.list');
-//     Route::get('/create', 'viewAdminAccessCreate')->name('admin.view.admin.access.create');
-//     Route::get('/update/{id}', 'viewAdminAccessUpdate')->name('admin.view.admin.access.update');
-//     Route::post('/create', 'handleAdminAccessCreate')->name('admin.handle.admin.access.create');
-//     Route::post('/update/{id}', 'handleAdminAccessUpdate')->name('admin.handle.admin.access.update');
-//     Route::put('/status', 'handleToggleAdminAccessStatus')->name('admin.handle.admin.access.status');
-//     Route::get('/delete/{id}', 'handleAdminAccessDelete')->name('admin.handle.admin.access.delete');
-// });
+Route::prefix('vendor')->controller(VendorInvoiceController::class)->group(function () {
+    Route::get('/create', 'viewVendorCreate')->name('view.vendor.create');
+    Route::post('/create', 'handleVendorCreate')->name('handle.vendor.create');
+    Route::get('/print/{id}', 'viewPrintCreate')->name('view.print.list');
+});

@@ -154,6 +154,9 @@
 
     <!-- App js-->
     <script src="{{ asset('assets/js2/app.min.js') }}"></script>
+
+    <!-- Script JS File -->
+    <script src="{{ asset('script.js') }}"></script>
 </body>
 
 </html>

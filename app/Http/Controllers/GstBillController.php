@@ -26,9 +26,12 @@ class GstBillController extends Controller
         ]);
     }
 
-    public function viewGstBillPrint()
+    public function viewGstBillPrint($id)
     {
-        return view('gst-bill.gst-bill-print');
+        $bill = GstBill::where('id', $id)->with('party')->first();
+        return view('gst-bill.gst-bill-print', [
+            'bill' => $bill,
+        ]);
     }
 
     public function handleGstBillCreate(Request $request)
@@ -53,7 +56,7 @@ class GstBillController extends Controller
             // dd($validation->errors()->all());
             return redirect()->back()->withErrors($validation)->withInput();
         }
-        
+
         $client = new GstBill();
         $client->party_id = $request->input('party_id');
         $client->invoice_date = $request->input('invoice_date');
@@ -72,5 +75,13 @@ class GstBillController extends Controller
         $client->save();
 
         return redirect()->route('view.gst.bill.list')->with('message', 'Gst Bill successfully created');
+    }
+
+    public function handleGstBillDelete($id) {
+        $gst_bill = GstBill::find($id);
+        
+        $gst_bill->delete();
+
+        return redirect()->back()->with('message', 'Message successfully deleted');
     }
 }
