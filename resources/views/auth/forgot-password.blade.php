@@ -1,25 +1,36 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+@extends('web.layouts.auth')
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@section('auth-section')
+    <figure>
+        <form action="{{ route('web.handle.forgot.password') }}" method="POST" class="space-y-6">
+            @csrf
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
+            <div class="space-y-3">
+                <h1 class="font-semibold text-ascent text-4xl">Forgot Password</h1>
+                <p class="text-xs text-gray-500">Enter your email to get password reset link</p>
+            </div>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <div class="input-group">
+                <label for="email" class="input-label">Email Address <em>*</em></label>
+                <input type="email" name="email" value="{{ old('email') }}"
+                    class="input-box-md @error('email') input-invalid @enderror" placeholder="Enter Email Address" required
+                    minlength="10" maxlength="100">
+                @error('email')
+                    <span class="input-error">{{ $message }}</span>
+                @enderror
+            </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            <div>
+                <button type="submit" class="btn-primary-md w-full flex items-center justify-center">
+                    <span>Get Reset Link</span>
+                    <i data-feather="link" class="absolute left-5"></i>
+                </button>
+            </div>
+
+            <div>
+                <p class="text-xs">Already have an account ? <a href="{{route('web.view.login')}}" class="link">Login now</a></p>
+            </div>
+
+        </form>
+    </figure>
+@endsection

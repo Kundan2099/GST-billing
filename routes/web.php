@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\GstBillController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\VendorInvoiceController;
@@ -47,3 +48,10 @@ Route::prefix('vendor')->controller(VendorInvoiceController::class)->group(funct
     Route::post('/create', 'handleVendorCreate')->name('handle.vendor.create');
     Route::get('/print/{id}', 'viewPrintCreate')->name('view.print.list');
 });
+
+// Login
+Route::get('/login', [AuthController::class, 'viewLogin'])->name('view.login');
+Route::post('/login', [AuthController::class, 'handleLogin'])->name('handle.login');
+
+// Logout
+Route::post('logout', [AuthController::class, 'handleLogout'])->name('handle.logout');

@@ -1,39 +1,55 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+@extends('web.layouts.auth')
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+@section('auth-section')
+    <figure>
+        <form action="{{ route('web.handle.reset.password',['token' => $token]) }}" method="POST" class="space-y-6">
+            @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <div class="space-y-3">
+                <h1 class="font-semibold text-ascent text-4xl">Reset Password</h1>
+                <p class="text-xs text-gray-500">Enter new password and confirm it to reset</p>
+            </div>
+
+            <div hidden>
+                <label for="email" class="input-label">Email Address <em>*</em></label>
+                <input type="email" readonly name="email" value="{{ old('email', $email) }}"
+                    class="input-box-md @error('email') input-invalid @enderror" placeholder="Enter Email Address" required
+                    minlength="10" maxlength="100">
+                @error('email')
+                    <span class="input-error">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="input-group">
+                <label for="password" class="input-label">Password <em>*</em></label>
+                <input type="password" name="password" class="input-box-md @error('password') input-invalid @enderror"
+                    placeholder="Enter Password" required minlength="6" maxlength="20">
+                @error('password')
+                    <span class="input-error">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="input-group">
+                <label for="password" class="input-label">Confirm Password <em>*</em></label>
+                <input type="password" name="password_confirmation" class="input-box-md @error('password_confirmation') input-invalid @enderror"
+                    placeholder="Repeat Password" required minlength="6" maxlength="20">
+                @error('password_confirmation')
+                    <span class="input-error">{{ $message }}</span>
+                @enderror
+            </div>
+
+
+            <div>
+                <button type="submit" class="btn-primary-md w-full flex items-center justify-center">
+                    <span>Reset Password</span>
+                    <i data-feather="key" class="absolute left-5"></i>
+                </button>
+            </div>
+
+            <div>
+                <p class="text-xs">Already have an account ? <a href="{{route('web.view.login')}}" class="link">Login now</a></p>
+            </div>
+
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </figure>
+@endsection

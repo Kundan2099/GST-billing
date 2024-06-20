@@ -1,47 +1,56 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layout.auth')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('auth-section')
+    <figure>
+        <form action="{{ route('handle.login') }}" method="POST" class="space-y-6">
+            @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <div class="space-y-3">
+                <h1 class="font-semibold text-ascent text-4xl">Sign In</h1>
+                <p class="text-xs text-gray-500">Enter your email and password to sign in!</p>
+            </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <div class="input-group">
+                <label for="email" class="input-label">Email Address <em>*</em></label>
+                <input type="email" name="email" value="{{ old('email') }}"
+                    class="input-box-md @error('email') input-invalid @enderror" placeholder="Enter Email Address" required
+                    minlength="10" maxlength="100">
+                @error('email')
+                    <span class="input-error">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <div class="input-group">
+                <label for="password" class="input-label">Password <em>*</em></label>
+                <input type="password" name="password" class="input-box-md @error('password') input-invalid @enderror"
+                    placeholder="Enter Password" required minlength="6" maxlength="20">
+                @error('password')
+                    <span class="input-error">{{ $message }}</span>
+                @enderror
+            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            {{-- Remember me --}}
+            <div class="flex items-center">
+                <input type="checkbox" @checked(old('remember')) name="remember" id="remember">
+                <label for="remember" class="text-xs">Keep me logged in</label>
+            </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+            <div>
+                <button type="submit" class="btn-primary-md w-full flex items-center justify-center">
+                    <span>Submit</span>
+                    <i data-feather="arrow-right" class="absolute right-5"></i>
+                </button>
+            </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+            <div>
+                <p class="text-xs">Forgot your password ? <a href="#" class="link">Reset Password</a></p>
+            </div>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            <div>
+                <p class="text-xs">Create a new account ? <a href="#" class="link">Register now</a></p>
+            </div>
+
+
+        </form>
+    </figure>
+@endsection
