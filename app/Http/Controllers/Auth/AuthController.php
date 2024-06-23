@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function viewLogin() {
+    public function viewLogin()
+    {
         return view('auth.login'); // Replace with your login form view
     }
 
@@ -29,7 +33,7 @@ class AuthController extends Controller
     //     return redirect()->back()->withInput($request->only('email'));
     // }
 
-        /**
+    /**
      * Handle Login
      *
      * @return mixed
@@ -66,6 +70,49 @@ class AuthController extends Controller
                 'description' => $exception->getMessage()
             ]);
         }
+    }
+
+
+
+    public function viewRegister()
+    {
+        return view('auth.register');
+    }
+
+    public function handleRegister(Request $request) {
+        $validation = validator::make($request->all(), [
+                'name' => ['required', 'string', 'min:1', 'max:250'],
+                'email' => ['required', 'string', 'email', 'unique:users', 'min:1', 'max:250'],
+                'password' => ['required', 'string', 'min:6', 'max:20'],
+        ]);
+
+        if($validation->fails()){
+            return redirect()->back()->withErrors($validation)->withInput();
+        }
+
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
+
+        if ($user) {
+            return redirect()->to(RouteServiceProvider::HOME)->with('message', 'Successfully Registred');
+        } else {
+            return redirect()->back()-with('message', 'as error occcured');
+        }
+
+    }
+
+    public function handleLogout(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 
 

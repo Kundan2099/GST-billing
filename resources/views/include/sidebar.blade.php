@@ -4,7 +4,7 @@
         <div class="user-box text-center">
             <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user-img" title="Mat Helme"
                 class="rounded-circle avatar-md" />
-            <p class="text-muted mt-2">Admin Head</p>
+            <p class="text-muted mt-2">{{auth()->user()->name}}</p>
         </div>
 
         <!--- Sidemenu -->

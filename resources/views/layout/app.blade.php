@@ -45,7 +45,7 @@
                             <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="user-image"
                                 class="rounded-circle" />
                             <span class="pro-user-name ml-1">
-                                Geneva <i class="mdi mdi-chevron-down"></i>
+                                {{auth()->user()->name}} <i class="mdi mdi-chevron-down"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown">
@@ -67,6 +67,17 @@
                                 <i class="fe-log-out"></i>
                                 <span>Logout</span>
                             </a>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('handle.logout') }}">
+                                @csrf
+
+                                <a href="{{route('handle.logout')}}"
+                                    onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                            </a>
+                            </form>
                         </div>
                     </li>
                 </ul>

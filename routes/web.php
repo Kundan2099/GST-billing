@@ -49,9 +49,15 @@ Route::prefix('vendor')->controller(VendorInvoiceController::class)->group(funct
     Route::get('/print/{id}', 'viewPrintCreate')->name('view.print.list');
 });
 
+
+
+Route::middleware('web')->group(function () {
 // Login
 Route::get('/login', [AuthController::class, 'viewLogin'])->name('view.login');
 Route::post('/login', [AuthController::class, 'handleLogin'])->name('handle.login');
 
-// Logout
+Route::get('register', [AuthController::class, 'viewRegister'])->name('view.register');
+Route::post('register', [AuthController::class, 'handleRegister'])->name('handle.register');
+
 Route::post('logout', [AuthController::class, 'handleLogout'])->name('handle.logout');
+});
