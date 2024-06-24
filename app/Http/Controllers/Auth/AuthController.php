@@ -59,9 +59,7 @@ class AuthController extends Controller
             }
 
             return redirect()->back()->withErrors([
-                'password' => [
-                    'Wrong password'
-                ]
+                'password' => ['Wrong password']
             ])->withInput($request->only('email', 'remember'));
         } catch (Exception $exception) {
             return redirect()->back()->with('message', [
@@ -79,14 +77,15 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function handleRegister(Request $request) {
+    public function handleRegister(Request $request)
+    {
         $validation = validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:1', 'max:250'],
-                'email' => ['required', 'string', 'email', 'unique:users', 'min:1', 'max:250'],
-                'password' => ['required', 'string', 'min:6', 'max:20'],
+            'name' => ['required', 'string', 'min:1', 'max:250'],
+            'email' => ['required', 'string', 'email', 'unique:users', 'min:1', 'max:250'],
+            'password' => ['required', 'string', 'min:6', 'max:20'],
         ]);
 
-        if($validation->fails()){
+        if ($validation->fails()) {
             return redirect()->back()->withErrors($validation)->withInput();
         }
 
@@ -99,21 +98,13 @@ class AuthController extends Controller
         if ($user) {
             return redirect()->to(RouteServiceProvider::HOME)->with('message', 'Successfully Registred');
         } else {
-            return redirect()->back()-with('message', 'as error occcured');
+            return redirect()->back() - with('message', 'as error occcured');
         }
-
     }
 
     public function handleLogout(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
         return redirect('/login');
     }
-
-
 }
